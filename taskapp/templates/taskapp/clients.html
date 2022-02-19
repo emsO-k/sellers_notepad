@@ -1,0 +1,38 @@
+{%extends 'taskapp/base.html'%}
+{%block content%}
+
+<div class="container">
+    <div class="row">
+
+        <div class="col-2"></div>
+        <div class="col-8 table-responsive-sm">
+            <h3>
+                Clientes
+            </h3>
+            <br>
+            <table class="table table-sm table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th style="white-space: nowrap; width: 1%;">
+                            Nombre
+                        </th>
+                        <th style="white-space: nowrap; width: 1%;">Agregado el...</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for client in clients %}
+                    <tr>
+                        <td style="white-space: nowrap; width: 1%;">
+                            <a href='{% url "edit_client" client.id %}'> {{client.name}}
+                            </a>
+                        </td>
+                        <td style="white-space: nowrap; width: 1%;">{{client.address|default_if_none:"-"}}</td>
+                        {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-2"></div>
+    </div>
+</div>
+
+{%endblock%}

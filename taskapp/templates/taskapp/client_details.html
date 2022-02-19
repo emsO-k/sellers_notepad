@@ -1,0 +1,29 @@
+{%extends 'taskapp/base.html'%}
+{%block content%}
+<div class="container">
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+            <h3>
+
+            </h3>
+            <br>
+
+            <form action="" method="post">
+                {% csrf_token %}
+                {{clientForm.as_p}}
+                <button type="submit" class="btn btn-primary">Guardar </button>
+            </form>
+            <br>
+            <br>
+            <form method="POST" action='{% url "delete_client" client_id %}'>
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Eliminar </button> <br><small>Se borrarán todas las tareas
+                    relacionadas a este cliente</small>
+            </form>
+            <div class="col-2"></div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

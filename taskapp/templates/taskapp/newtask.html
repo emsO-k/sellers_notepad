@@ -1,0 +1,47 @@
+{%extends 'taskapp/base.html'%}
+{%block content%}
+<div class="container">
+    <div class="row">
+
+        <div class="col-2"></div>
+        <div class="col-8">
+            <h3>
+                {% if editMode %}
+                Editar tarea
+                {% else %}
+                Nueva tarea
+                {% endif %}
+            </h3>
+            <br>
+
+            <form action="" method="post">
+                {% csrf_token %}
+                <p>
+                    {{taskForm.client.label}}
+                    {{taskForm.client}}
+                    &emsp;
+                    {{taskForm.new_client.label}}
+                    {{taskForm.new_client}}
+                </p>
+                <p>
+                    {{taskForm.description.label}}
+                    <br>
+                    {{taskForm.description}}
+                </p>
+
+                <button type="submit" class="btn btn-primary">Guardar </button>
+            </form>
+            <br>
+            <br>
+            {% if editMode %}
+            <form method="POST" action='{% url "delete_task" task_id %}'>
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Eliminar </button>
+            </form>
+            {% endif %}
+            <div class="col-2"></div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

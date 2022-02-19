@@ -1,0 +1,82 @@
+{%extends 'taskapp/base.html'%}
+{%block content%}
+{% load humanize %}
+
+<div class="container">
+    <div class="row">
+
+        <div class="col-2"></div>
+        <div class="col-8 table-responsive-sm">
+            {% if client %}
+            <h3>
+                <a href='{% url "edit_client" client.id %}'>{{client.name}}</a>
+            </h3>
+            {% else %}
+            <h3>{{title}} </h3>
+            {% endif %}
+            <br>
+            {% if tasks.count == 0 %}
+            <p>No hay tareas en esta lista</p>
+            {% else %}
+
+            <table class="table table-sm table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        {% if not client %}
+                        <th>Cliente</th>
+                        {% endif %}
+                        <th>
+                            Creada el...
+                        </th>
+                        <th>
+                            Descripción
+                        </th>
+                        <th style="white-space: nowrap; width: 1%;">
+                            Completada el...
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% for task in tasks %}
+                    <tr>
+                        {% if not client %}
+                        <td style="white-space: nowrap; width: 1%;">{{task.client.name|truncatechars:12}}</td>
+                        {% endif %}
+                        <td style="white-space: nowrap; width: 1%;">
+                            {% if not task.completed_date %}
+                            <a href='{% url "edit_task" task.id %}'>
+                                {{task.created_date|date:"d/M/Y"}}
+                                <!-- <button class="btn btn-warning btn-sm">
+                                    Editar
+                                </button> -->
+                            </a>
+                            {% else %}
+                            {{task.created_date|date:"d/M/Y"}}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {{task.description|safe|linebreaks}}
+                        </td>
+                        <td style="white-space: nowrap; width: 1%;">
+                            {% if task.completed_date %}
+                            <button class="btn btn-success btn-sm"
+                                disabled>{{task.completed_date|date:"d/M/Y"}}</button>
+                            {% else %}
+                            <form method="POST" action='{% url "complete_task" task.id %}'>
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-primary btn-sm">Completar</button>
+                            </form>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+        </div>
+        <div class="col-2"></div>
+    </div>
+</div>
+
+{%endblock%}
