@@ -5,8 +5,8 @@
 <div class="container">
     <div class="row">
 
-        <div class="col-2"></div>
-        <div class="col-8 table-responsive-sm">
+        <div class="col-xs-2"></div>
+        <div class="col-xs-8 table-responsive-sm">
             {% if client %}
             <h3>
                 <a href='{% url "edit_client" client.id %}'>{{client.name}}</a>
@@ -25,15 +25,9 @@
                         {% if not client %}
                         <th>Cliente</th>
                         {% endif %}
-                        <th>
-                            Creada el...
-                        </th>
-                        <th>
-                            Descripción
-                        </th>
-                        <th style="white-space: nowrap; width: 1%;">
-                            Completada el...
-                        </th>
+                        <th>Fecha inicio</th>
+                        <th>Descripción</th>
+                        <th style="white-space: nowrap; width: 1%;">Fecha fin</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -46,22 +40,22 @@
                         <td style="white-space: nowrap; width: 1%;">
                             {% if not task.completed_date %}
                             <a href='{% url "edit_task" task.id %}'>
-                                {{task.created_date|date:"d/M/Y"}}
+                                {{task.created_date|date:"d/m/y"}}
                                 <!-- <button class="btn btn-warning btn-sm">
                                     Editar
                                 </button> -->
                             </a>
                             {% else %}
-                            {{task.created_date|date:"d/M/Y"}}
+                            {{task.created_date|date:"d/m/y"}}
                             {% endif %}
                         </td>
-                        <td>
+                        <td style="max-width: 10rem; word-wrap: break-word">
                             {{task.description|safe|linebreaks}}
                         </td>
                         <td style="white-space: nowrap; width: 1%;">
                             {% if task.completed_date %}
                             <button class="btn btn-success btn-sm"
-                                disabled>{{task.completed_date|date:"d/M/Y"}}</button>
+                                disabled>{{task.completed_date|date:"d/m/y"}}</button>
                             {% else %}
                             <form method="POST" action='{% url "complete_task" task.id %}'>
                                 {% csrf_token %}
@@ -75,7 +69,7 @@
             </table>
             {% endif %}
         </div>
-        <div class="col-2"></div>
+        <div class="col-xs-2"></div>
     </div>
 </div>
 
